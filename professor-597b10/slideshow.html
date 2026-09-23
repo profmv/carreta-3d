@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Histórias da impressão 3D</title>
+<style>
+  :root{
+    --fundo:#0d1117; --carta:#161b22; --linha:#30363d;
+    --texto:#e6edf3; --fraco:#8b949e; --destaque:#58c4dd; --quente:#f0a05a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--fundo); color:var(--texto);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .palco{flex:1; display:flex; align-items:center; justify-content:center; padding:24px; min-height:0}
+  .slide{
+    display:none; width:100%; max-width:1200px; height:100%;
+    grid-template-columns:1fr 1fr; gap:32px; align-items:center;
+  }
+  .slide.ativo{display:grid}
+  .quadro{
+    position:relative; width:100%; aspect-ratio:16/9; border-radius:14px;
+    overflow:hidden; background:var(--carta); border:1px solid var(--linha);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .quadro img{width:100%;height:100%;object-fit:cover;display:block}
+  .quadro img.falhou{display:none}
+  .reserva{
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:10px; text-align:center;
+    padding:24px; background:linear-gradient(135deg,#1b2430 0%,#0f1520 100%);
+  }
+  .quadro img:not(.falhou) ~ .reserva{display:none}
+  .reserva .num{font-size:64px;font-weight:700;color:var(--destaque);opacity:.35;line-height:1}
+  .reserva .rot{font-size:13px;color:var(--fraco);letter-spacing:.08em;text-transform:uppercase}
+  .texto{padding:8px 4px}
+  .etiqueta{
+    display:inline-block; font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--quente); border:1px solid var(--quente); border-radius:999px;
+    padding:4px 12px; margin-bottom:18px;
+  }
+  .etiqueta.pesquisa{color:var(--fraco);border-color:var(--fraco)}
+  h2{font-size:clamp(24px,3.2vw,40px); line-height:1.15; margin-bottom:18px}
+  .corpo{font-size:clamp(15px,1.6vw,19px); line-height:1.6; color:#c9d4e0; margin-bottom:16px}
+  .gancho{
+    font-size:clamp(14px,1.4vw,17px); line-height:1.55; color:var(--destaque);
+    border-left:3px solid var(--destaque); padding-left:14px;
+  }
+  .barra{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:12px 24px; border-top:1px solid var(--linha); background:#0a0e14;
+  }
+  .barra button{
+    background:var(--carta); color:var(--texto); border:1px solid var(--linha);
+    border-radius:8px; padding:9px 18px; font-size:15px; cursor:pointer;
+  }
+  .barra button:hover{border-color:var(--destaque)}
+  .conta{font-size:14px;color:var(--fraco);font-variant-numeric:tabular-nums}
+  .pontos{display:flex;gap:6px;flex-wrap:wrap}
+  .ponto{width:9px;height:9px;border-radius:50%;background:var(--linha);cursor:pointer;border:0;padding:0}
+  .ponto.ativo{background:var(--destaque)}
+  .ajuda{font-size:12px;color:var(--fraco)}
+  @media (max-width:900px){
+    .slide.ativo{grid-template-columns:1fr; align-content:start; overflow-y:auto}
+    .palco{padding:16px}
+    .ajuda{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="palco" id="palco"></div>
+
+<div class="barra">
+  <div style="display:flex;gap:10px;align-items:center">
+    <button id="ant">&larr; Anterior</button>
+    <button id="prox">Próximo &rarr;</button>
+    <span class="conta" id="conta"></span>
+  </div>
+  <div class="pontos" id="pontos"></div>
+  <span class="ajuda">Setas para navegar &middot; F11 para tela cheia</span>
+</div>
+
+<script>
+var HISTORIAS = [
+ {
+  img:"imagens/01-origem.jpg", rot:"Laboratório, 1983", sel:"Como começou",
+  tit:"A primeira peça não servia para nada",
+  corpo:"Em 1984 Chuck Hull pediu a patente da estereolitografia: um laser desenha na superfície de uma resina líquida, e onde a luz toca, o líquido endurece. Camada após camada, um objeto sólido sobe de dentro de um tanque. Em 1987 a empresa dele vendeu a SLA-1, a primeira impressora 3D comercial do mundo.",
+  gancho:"Hull também criou o formato STL. O arquivo que a turma vai fatiar neste curso usa um padrão inventado para vender uma máquina de 1987."
+ },
+ {
+  img:"imagens/02-reprap.jpg", rot:"Reino Unido, 2005", sel:"A máquina que se copia",
+  tit:"Uma impressora projetada para imprimir a si mesma",
+  corpo:"O projeto RepRap tinha um objetivo estranho: construir uma impressora de baixo custo capaz de imprimir boa parte das próprias peças. O resto viria de parafusos e eletrônica de loja comum. Tudo foi publicado de graça, aberto, desde o primeiro dia.",
+  gancho:"A impressora desta carreta é descendente direta desse projeto. Quando a patente do processo venceu, em 2009, o preço despencou — e o mercado doméstico nasceu."
+ },
+ {
+  img:"imagens/03-implante.jpg", rot:"Medicina", sel:"Peça que fica no corpo",
+  tit:"Um implante feito para um osso só",
+  corpo:"A partir da tomografia de um paciente, é possível fabricar um implante de titânio no formato exato da falha óssea dele, com estrutura interna vazada que o osso invade e integra com o tempo. Casos de implante impresso feito sob medida vêm sendo relatados desde o começo dos anos 2010.",
+  gancho:"Aqui não existe 'tamanho médio'. Cada peça é única, e é exatamente por isso que a impressão 3D ganha: molde de injeção não faz uma peça só."
+ },
+ {
+  img:"imagens/04-modelo.jpg", rot:"Centro cirúrgico", sel:"Ensaiar a cirurgia",
+  tit:"O cirurgião segura o coração antes de operar",
+  corpo:"Modelos anatômicos impressos a partir do exame de imagem do próprio paciente permitem que a equipe estude o caso com o objeto na mão e planeje a operação antes de entrar na sala. É uso já estabelecido em hospitais e universidades.",
+  gancho:"Repare no que mudou: a peça impressa não é o produto. Ela é a ferramenta de pensar."
+ },
+ {
+  img:"imagens/05-protese.jpg", rot:"Prótese", sel:"Custo que cabe",
+  tit:"Uma mão que cresce junto com a criança",
+  corpo:"Redes de voluntários produzem próteses de mão de baixo custo para crianças, em plástico impresso. Como a criança cresce, a prótese precisa ser trocada com frequência — e refazer um arquivo custa muito menos que refazer um equipamento.",
+  gancho:"É mecanicamente mais simples que uma prótese profissional, e isso precisa ser dito. O valor está no acesso, não no desempenho."
+ },
+ {
+  img:"imagens/06-casa.jpg", rot:"Construção civil", sel:"Casas",
+  tit:"Uma casa com paredes impressas",
+  corpo:"Uma máquina de grande porte deposita concreto em camadas, no lugar de tijolo e fôrma. Já existem casas impressas entregues e habitadas. As paredes sobem em algumas dezenas de horas de máquina.",
+  gancho:"Cuidado com a manchete. O que é impresso são as paredes. Fundação, telhado, instalações e acabamento seguem convencionais — a obra completa leva muito mais que 'as 24 horas' do título."
+ },
+ {
+  img:"imagens/07-ponte.jpg", rot:"Amsterdã", sel:"Infraestrutura",
+  tit:"Robôs soldaram uma ponte no ar",
+  corpo:"Uma passarela de pedestres em aço inoxidável foi fabricada por braços robóticos que depositavam metal fundido camada por camada, formando uma estrutura curva que nenhuma viga reta produziria. Depois de pronta, foi instalada sobre um canal.",
+  gancho:"A forma não é enfeite. Quando a máquina deposita material só onde a força passa, a peça fica mais leve e mais forte ao mesmo tempo."
+ },
+ {
+  img:"imagens/08-espaco.jpg", rot:"Estação Espacial", sel:"Enviar o arquivo",
+  tit:"A ferramenta que foi para o espaço sem foguete",
+  corpo:"Uma impressora 3D foi instalada na Estação Espacial Internacional. Quando faltou uma ferramenta, ela foi projetada na Terra, enviada como arquivo e impressa em órbita — sem esperar o próximo lançamento.",
+  gancho:"Essa é a ideia mais poderosa do curso inteiro: transportar o arquivo, não o produto. Foi o mesmo raciocínio que fez a impressão 3D responder rápido na pandemia."
+ },
+ {
+  img:"imagens/09-motor.jpg", rot:"Aeronáutica", sel:"20 peças viram 1",
+  tit:"Vinte peças soldadas viraram uma só",
+  corpo:"O bico injetor de combustível de um motor a jato usado em aviação comercial passou a ser fabricado por fusão a laser de pó metálico. A versão anterior exigia soldar cerca de vinte partes separadas. A impressa é uma peça única, mais leve e mais durável — e já foi produzida às dezenas de milhares.",
+  gancho:"Some a solda, some o parafuso, some o estoque de vinte itens e some a chance de montar errado. Nenhuma usinagem faz isso."
+ },
+ {
+  img:"imagens/10-alimento.jpg", rot:"Alimentos", sel:"Comida impressa",
+  tit:"Chocolate que sai em espiral",
+  corpo:"Existem impressoras que extrudam chocolate, massa e purê, montando formas que a mão não faria. É um nicho real, usado em confeitaria e gastronomia de alto padrão — não é produção em massa e não substitui cozinha.",
+  gancho:"E atenção na sua impressora: peça de plástico impressa tem ranhuras entre as camadas que acumulam resíduo, e PLA amolece com água quente. Molde é uma coisa; pote de guardar comida é outra."
+ },
+ {
+  img:"imagens/11-bio.jpg", rot:"Pesquisa", sel:"Órgãos", pesquisa:true,
+  tit:"Órgãos: o que é verdade e o que ainda não é",
+  corpo:"Bioimpressoras depositam células dentro de um gel, em camadas, formando tecido vivo. Existem tecidos simples produzidos em laboratório e usados em pesquisa e teste de medicamento.",
+  gancho:"Órgão funcional para transplante em ser humano NÃO é realidade clínica hoje. Diga isso com todas as letras — é o ponto em que a aula mais facilmente perde credibilidade."
+ },
+ {
+  img:"imagens/12-futuro.jpg", rot:"O que vem", sel:"O futuro",
+  tit:"A fábrica pequena, perto de você",
+  corpo:"A aposta mais plausível não é imprimir tudo. É deixar de estocar: em vez de um galpão cheio de peças que talvez nunca sejam usadas, guarda-se o arquivo e imprime-se quando precisar — em navio, mina, hospital, oficina de bairro.",
+  gancho:"Impressão 3D é lenta e cara por peça. Por isso ela não substitui a fábrica. Ela ocupa o lugar onde a fábrica nunca foi boa: um de cada, sob medida, perto de quem precisa."
+ }
+];
+
+var palco=document.getElementById('palco'), pontos=document.getElementById('pontos'),
+    conta=document.getElementById('conta'), atual=0;
+
+HISTORIAS.forEach(function(h,i){
+  var d=document.createElement('div'); d.className='slide';
+  d.innerHTML=
+    '<div class="quadro">'+
+      '<img src="'+h.img+'" alt="" onerror="this.classList.add(\'falhou\')">'+
+      '<div class="reserva"><span class="num">'+(i+1)+'</span>'+
+      '<span class="rot">'+h.rot+'</span></div>'+
+    '</div>'+
+    '<div class="texto">'+
+      '<span class="etiqueta'+(h.pesquisa?' pesquisa':'')+'">'+h.rot+'</span>'+
+      '<h2>'+h.tit+'</h2>'+
+      '<p class="corpo">'+h.corpo+'</p>'+
+      '<p class="gancho">'+h.gancho+'</p>'+
+    '</div>';
+  palco.appendChild(d);
+  var b=document.createElement('button'); b.className='ponto'; b.title=h.sel;
+  b.onclick=function(){ir(i)};
+  pontos.appendChild(b);
+});
+
+function ir(n){
+  atual=(n+HISTORIAS.length)%HISTORIAS.length;
+  var s=palco.children, p=pontos.children;
+  for(var i=0;i<s.length;i++){
+    s[i].className='slide'+(i===atual?' ativo':'');
+    p[i].className='ponto'+(i===atual?' ativo':'');
+  }
+  conta.textContent=(atual+1)+' de '+HISTORIAS.length;
+}
+document.getElementById('prox').onclick=function(){ir(atual+1)};
+document.getElementById('ant').onclick=function(){ir(atual-1)};
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();ir(atual+1)}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();ir(atual-1)}
+  if(e.key==='Home')ir(0);
+  if(e.key==='End')ir(HISTORIAS.length-1);
+});
+ir(0);
+</script>
+
+</body>
+</html>
