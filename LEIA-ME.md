@@ -6,6 +6,12 @@ serão preenchidos depois.
 
 Não precisa de internet, não precisa instalar nada, não precisa de conta.
 
+**Na internet:** <https://profmv.github.io/carreta-3d/>
+**Sem internet:** a pasta no pendrive, do mesmo jeito.
+
+Os dois são o mesmo app. Use o endereço quando houver sinal; use o pendrive
+quando não houver. O plano B não depende do plano A.
+
 ## 1. Antes de sair de casa
 
 Copie a pasta `app-do-curso` inteira para o pendrive. A pasta precisa ir
@@ -15,6 +21,12 @@ Leve também uma segunda cópia em outro lugar (celular, e-mail para você mesmo
 nuvem). São menos de 100 KB.
 
 ## 2. Na carreta, para abrir
+
+**Com internet:** abra <https://profmv.github.io/carreta-3d/> em qualquer
+navegador, inclusive no celular dos alunos. Se a turma tiver celular, este é o
+caminho mais rápido: você escreve o endereço no quadro e pronto.
+
+**Sem internet, ou se o sinal cair no meio:**
 
 **Jeito recomendado:** copie a pasta do pendrive para a Área de Trabalho do
 computador e dê dois cliques em **`abrir-app.bat`**. Ele abre o navegador
@@ -54,6 +66,8 @@ Detalhes que valem saber:
 - Errou? A resposta certa aparece explicada na hora. A atividade ensina, não só
   corrige.
 - Dá para refazer quantas vezes quiser. Cada tentativa vira uma linha no painel.
+- A qualquer momento o aluno pode clicar em **Salvar meu resultado** e baixar um
+  arquivo só dele. O botão está na lista de atividades e na tela de resultado.
 
 ## 4. Como os resultados são guardados
 
@@ -64,6 +78,13 @@ onde o aluno fez a atividade**, e são recuperados no **Painel do professor**
 Vários alunos podem usar o mesmo computador: cada um escreve o próprio nome no
 começo e cada finalização vira uma linha separada.
 
+**O aluno também pode salvar o próprio resultado.** O botão **Salvar meu
+resultado** gera um arquivo `resultado-nome-do-aluno-encontro-1.csv` com o que
+ele fez até ali. O arquivo tem exatamente as mesmas colunas do CSV do professor,
+então dá para juntar tudo na mesma planilha. Serve para quem fez a atividade no
+próprio celular, e serve como garantia se o computador não estiver guardando
+nada.
+
 **No fim da aula, em cada computador usado:** abra o painel e clique em
 **Baixar CSV**. O arquivo cai na pasta de downloads e abre no Excel. Se a turma
 usou quatro máquinas, são quatro arquivos, que você junta depois.
@@ -71,31 +92,44 @@ usou quatro máquinas, são quatro arquivos, que você junta depois.
 > **Aviso vermelho na tela.** Se aparecer "Este computador não está guardando os
 > resultados", o navegador bloqueou o armazenamento — acontece em janela anônima
 > e em algumas configurações. As atividades continuam funcionando normalmente;
-> só o registro se perde. Abra pelo `abrir-app.bat`, que resolve, ou anote os
-> resultados no papel naquele computador.
+> só o registro automático se perde. Nesse caso peça ao aluno que clique em
+> **Salvar meu resultado** antes de fechar a página — o arquivo é gerado do mesmo
+> jeito. Abrir pelo `abrir-app.bat` também resolve o bloqueio.
 
 Nenhum dado de aluno menor de idade sai da máquina. Foi feito assim de
 propósito.
 
-## 5. Publicar no GitHub Pages depois
+## 5. O site publicado
 
-Hoje não dá tempo, e não é necessário. Quando quiser, o app já está pronto para
-subir sem mudar uma linha:
+Endereço: <https://profmv.github.io/carreta-3d/>
 
-1. Crie um repositório novo no GitHub e envie o conteúdo da pasta `app-do-curso`
-   para a raiz dele.
-2. No repositório, vá em Configurações, seção Pages, e mande publicar a partir da
-   branch principal, pasta raiz.
-3. Em alguns minutos sai um endereço público. Qualquer celular abre.
+Repositório: <https://github.com/profmv/carreta-3d> — **público**, porque o
+GitHub Pages exige isso. Ele contém só o app: nenhum material do professor,
+nenhum plano de aula, nenhuma pendência interna. O repositório de planejamento
+continua privado e separado.
 
-Duas coisas não mudam com isso: continua **sem servidor** e continua guardando
-resultado **só no aparelho de quem respondeu**. Publicar facilita o acesso, não
-centraliza os dados. Se um dia você quiser resultado centralizado de verdade,
-aí sim precisa de outra ferramenta — e de conversar com a coordenação sobre
-dado de aluno menor de idade.
+Duas coisas que publicar **não** muda:
 
-O `abrir-app.bat` não faz sentido no Pages; é só para uso local. Pode deixar
-lá, ninguém vê.
+- Continua sem servidor. O site é feito só de arquivos.
+- Os resultados continuam guardados **no aparelho de quem respondeu**. O link do
+  "Painel do professor" é público, mas quem abrir vê apenas o que foi feito no
+  próprio aparelho. Não existe uma base central para alguém espiar — e nenhum
+  dado de aluno menor de idade sai da máquina dele.
+
+Para atualizar o site depois de mexer nos arquivos:
+
+```
+git add -A
+git commit -m "o que mudou"
+git push
+```
+
+A publicação leva uns dois minutos.
+
+Para tirar o site do ar a qualquer momento, apague o repositório em
+Configurações, ou torne-o privado — o endereço para de funcionar na hora.
+
+O `abrir-app.bat` não faz sentido no site; é só para uso local. Pode ignorar.
 
 ## 6. Para montar os Encontros 2 e 3
 
