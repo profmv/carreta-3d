@@ -133,17 +133,19 @@ O `abrir-app.bat` não faz sentido no site; é só para uso local. Pode ignorar.
 
 ### Os slides, pelo navegador
 
-Endereço: <https://profmv.github.io/carreta-3d/slides.html>
+Endereço: <https://profmv.github.io/carreta-3d/professor-597b10/>
+
+**Guarde nos favoritos.** Não há link para esta página em lugar nenhum do
+portal — quem não tiver o endereço não chega nela navegando pelo site.
 
 Serve para projetar de qualquer computador da carreta sem depender do
 pendrive. O PDF abre direto no navegador (F11 deixa em tela cheia, as setas
 passam os slides) e o arquivo editável fica disponível para baixar.
 
-No portal, o atalho é o **círculo cinza no fim do rodapé**, depois da frase
-"Não é página oficial de nenhuma instituição". Ele é discreto de propósito,
-para não competir com as atividades do aluno — mas **não é segredo**: o
-repositório é público e quem digitar o endereço abre. Não coloque em
-`slides/` nada que não possa ser visto por qualquer pessoa.
+O endereço esconde a página dos alunos, e é só para isso que ele serve. Ele
+**não é senha**: o repositório `profmv/carreta-3d` é público, então quem abrir
+o repositório no GitHub vê a pasta na lista de arquivos. Não coloque aí nada
+que não possa ser visto.
 
 ## 6. Para montar os Encontros 2 e 3
 

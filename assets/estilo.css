@@ -277,27 +277,6 @@ tbody tr:nth-child(even) { background: #fbfaf8; }
 }
 
 .rodape { color: var(--texto-suave); font-size: .85rem; margin-top: 36px; text-align: center; }
-
-/* Atalho discreto para os slides. Nao e seguranca — o site e publico e o
-   endereco slides.html funciona digitado. E so para nao competir com o
-   conteudo do aluno no portal. */
-.marca-slides {
-  display: inline-block;
-  margin-left: 10px;
-  color: var(--borda);
-  text-decoration: none;
-  font-size: 1rem;
-  line-height: 1;
-  opacity: .55;
-  transition: color .15s, opacity .15s;
-}
-.marca-slides:hover,
-.marca-slides:focus {
-  color: var(--laranja);
-  opacity: 1;
-  outline: none;
-}
-
 .escondido { display: none !important; }
 
 @media (max-width: 520px) {
