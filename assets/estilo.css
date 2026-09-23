@@ -165,6 +165,28 @@ a { color: var(--azul); }
 .retorno strong { display: block; margin-bottom: 4px; }
 
 /* peças de encaixar (tocar para pegar, tocar para soltar) */
+.carta.retomar {
+  border: 3px solid var(--laranja);
+  background: var(--laranja-claro);
+}
+.carta.retomar h2 { margin-top: 0; color: #8a3f04; }
+
+.dica-passo {
+  background: var(--laranja-claro);
+  border-left: 6px solid var(--laranja);
+  border-radius: var(--raio);
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-weight: 700;
+  color: #8a3f04;
+  line-height: 1.4;
+}
+.dica-passo.ativa {
+  background: var(--laranja);
+  border-left-color: #8a3f04;
+  color: #fff;
+}
+
 .pecas { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
 .peca {
   background: var(--laranja-claro);

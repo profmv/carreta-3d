@@ -19,6 +19,8 @@
 
 <main class="container">
 
+  <div id="retomar-caixa"></div>
+
   <h2>Escolha o encontro</h2>
   <p>Cada encontro tem atividades rápidas e um quiz no fim. Você pode repetir
      quantas vezes quiser.</p>
@@ -63,5 +65,29 @@
 
 </main>
 
+<script src="assets/nucleo.js"></script>
+<script>
+(function () {
+  "use strict";
+  var C = window.Carreta;
+  var s = C.lerSessao();
+  if (!s) { return; }
+
+  var destino = { "Encontro 1": "aula-01.html" }[s.aula];
+  if (!destino) { return; }
+
+  var quantas = Object.keys(s.feitas).length;
+  var carta = C.criar("div", "carta retomar");
+  carta.appendChild(C.criar("h2", null, "Continuar de onde parou"));
+  carta.appendChild(C.criar("p", null,
+    s.nome + " começou o " + s.aula + " em " + C.quandoCurto(s.inicio)
+    + " e já terminou " + quantas
+    + (quantas === 1 ? " atividade." : " atividades.")));
+  var a = C.criar("a", "botao", "Retomar como " + s.nome.split(" ")[0]);
+  a.href = destino;
+  carta.appendChild(a);
+  C.el("retomar-caixa").appendChild(carta);
+})();
+</script>
 </body>
 </html>

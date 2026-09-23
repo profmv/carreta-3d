@@ -8,6 +8,7 @@
 
   var CHAVE = "carreta3d.resultados.v1";
   var CHAVE_NOME = "carreta3d.nome";
+  var CHAVE_SESSAO = "carreta3d.sessao.v1";
 
   /* ---------- utilidades ---------- */
 
@@ -93,6 +94,37 @@
       "Abrir o app pelo atalho abrir-app.bat tambem resolve o bloqueio."));
     onde.insertBefore(d, onde.firstChild);
     return false;
+  }
+
+  /* ---- sessao em andamento ----
+     Fica em localStorage, nao em sessionStorage: o objetivo e justamente
+     sobreviver ao navegador ser fechado. Guarda o nome, a hora de inicio e
+     tudo que o aluno ja terminou. */
+  function salvarSessao(s) {
+    try { localStorage.setItem(CHAVE_SESSAO, JSON.stringify(s)); } catch (e) {}
+  }
+
+  function lerSessao() {
+    try {
+      var bruto = localStorage.getItem(CHAVE_SESSAO);
+      if (!bruto) { return null; }
+      var s = JSON.parse(bruto);
+      if (!s || !s.nome || !s.aula) { return null; }
+      if (!s.feitas) { s.feitas = {}; }
+      if (!s.meus) { s.meus = []; }
+      return s;
+    } catch (e) { return null; }
+  }
+
+  function limparSessao() {
+    try { localStorage.removeItem(CHAVE_SESSAO); } catch (e) {}
+  }
+
+  /* "2026-09-23 19:12" -> "23/09 as 19:12" */
+  function quandoCurto(txt) {
+    var m = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}:\d{2})/.exec(String(txt || ""));
+    if (!m) { return String(txt || ""); }
+    return m[3] + "/" + m[2] + " às " + m[4];
   }
 
   function lembrarNome(nome) { try { sessionStorage.setItem(CHAVE_NOME, nome); } catch (e) {} }
@@ -189,6 +221,10 @@
     paraCSV: paraCSV,
     baixarCSV: baixarCSV,
     lembrarNome: lembrarNome,
+    salvarSessao: salvarSessao,
+    lerSessao: lerSessao,
+    limparSessao: limparSessao,
+    quandoCurto: quandoCurto,
     agora: agora,
     baixarConteudo: baixarConteudo,
     nomeSeguro: nomeSeguro,

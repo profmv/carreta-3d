@@ -36,7 +36,7 @@
       titulo: "A linha do tempo",
       resumo: "Encaixe cada acontecimento no seu momento da história.",
       tipo: "encaixar",
-      apoio: "Toque num acontecimento para pegar e depois toque na data para soltar.",
+      apoio: "Toque para pegar, toque para soltar. Não funciona arrastando.",
       pares: [
         { rotulo: "Anos 1980",
           resposta: "Chuck Hull imprime a primeira peça, com resina endurecida por luz" },
@@ -54,7 +54,7 @@
       titulo: "Onde a impressão 3D é usada",
       resumo: "Ligue cada exemplo ao lugar onde ele acontece.",
       tipo: "encaixar",
-      apoio: "Toque num exemplo para pegar e depois toque no lugar para soltar.",
+      apoio: "Toque para pegar, toque para soltar. Não funciona arrastando.",
       pares: [
         { rotulo: "Indústria", resposta: "Peça de teste feita antes de fabricar milhares" },
         { rotulo: "Saúde", resposta: "Prótese sob medida para uma pessoa" },
@@ -136,6 +136,7 @@
   /* Guarda o que este aluno fez nesta sessao, mesmo que o navegador
      esteja bloqueando o armazenamento. E o que vai para o arquivo dele. */
   var meus = [];
+  var sessao = null;
 
   var elNome = C.el("tela-nome");
   var elMenu = C.el("tela-menu");
@@ -172,6 +173,10 @@
     }
     aluno = v;
     C.lembrarNome(v);
+    sessao = { nome: v, aula: AULA, inicio: C.agora(), feitas: {}, meus: [] };
+    feitas = sessao.feitas;
+    meus = sessao.meus;
+    C.salvarSessao(sessao);
     C.el("saudacao").textContent = "Vamos lá, " + primeiroNome(v) + ".";
     C.el("jogo-quem").textContent = primeiroNome(v);
     desenharMenu();
@@ -180,6 +185,54 @@
   }
 
   function primeiroNome(n) { return n.split(" ")[0]; }
+
+  /* ==================== retomar o que ficou pela metade ====================
+     Se o navegador fechou no meio da aula, o aluno nao perde o que ja fez.
+     O aviso so aparece se houver uma sessao desta aula guardada. */
+  function ofereceRetomar() {
+    var s = C.lerSessao();
+    var caixa = C.el("retomar-caixa");
+    caixa.innerHTML = "";
+    if (!s || s.aula !== AULA) { return; }
+
+    var quantas = Object.keys(s.feitas).length;
+    var carta = C.criar("div", "carta retomar");
+    carta.appendChild(C.criar("h2", null, "Continuar de onde parou"));
+    carta.appendChild(C.criar("p", null,
+      s.nome + " começou em " + C.quandoCurto(s.inicio) + " e já terminou "
+      + quantas + (quantas === 1 ? " atividade." : " atividades.")));
+
+    var linha = C.criar("div", "linha-botoes");
+    var bSim = C.criar("button", "botao", "Retomar como " + primeiroNome(s.nome));
+    bSim.addEventListener("click", function () { retomar(s); });
+    var bNao = C.criar("button", "botao neutro", "Não sou eu, começar do zero");
+    bNao.addEventListener("click", function () {
+      if (!confirm("Isto apaga o progresso de " + s.nome
+        + " guardado neste aparelho. Continuar?")) { return; }
+      C.limparSessao();
+      caixa.innerHTML = "";
+      C.el("campo-nome").focus();
+    });
+    linha.appendChild(bSim);
+    linha.appendChild(bNao);
+    carta.appendChild(linha);
+    caixa.appendChild(carta);
+  }
+
+  function retomar(s) {
+    aluno = s.nome;
+    sessao = s;
+    feitas = s.feitas;
+    meus = s.meus;
+    C.lembrarNome(aluno);
+    C.el("saudacao").textContent = "De volta, " + primeiroNome(aluno) + ".";
+    C.el("jogo-quem").textContent = primeiroNome(aluno);
+    desenharMenu();
+    mostrar("menu");
+    C.avisarSeSemArmazenamento(elMenu);
+  }
+
+  ofereceRetomar();
 
   /* ==================== menu ==================== */
 
@@ -298,6 +351,11 @@
     };
     meus.push(reg);
     C.salvarResultado(reg);
+    if (sessao) {
+      sessao.feitas = feitas;
+      sessao.meus = meus;
+      C.salvarSessao(sessao);
+    }
 
     var m = C.criar("div", "medalha");
     m.appendChild(C.criar("div", "numero", String(jogo.acertos)));
@@ -353,10 +411,30 @@
     var escolhida = null;
     var conferido = false;
 
+    var dica = C.criar("div", "dica-passo");
     var caixaPecas = C.criar("div", "pecas");
     var caixaAlvos = C.criar("div", "alvos");
+    area.appendChild(dica);
     area.appendChild(caixaPecas);
     area.appendChild(caixaAlvos);
+
+    /* A dica muda conforme o aluno age. Texto parado todo mundo pula;
+       texto que responde ao clique, nao. */
+    function mostrarDica() {
+      if (conferido) {
+        dica.className = "dica-passo escondido";
+        return;
+      }
+      if (escolhida) {
+        dica.className = "dica-passo ativa";
+        dica.textContent = "Passo 2 de 2 — agora toque no lugar certo, logo abaixo. "
+          + "Mudou de ideia? Toque na peça de novo para largar.";
+      } else {
+        dica.className = "dica-passo";
+        dica.textContent = "Passo 1 de 2 — toque numa peça para pegar. "
+          + "Não precisa arrastar.";
+      }
+    }
 
     C.embaralhar(def.pares).forEach(function (par) {
       var b = C.criar("button", "peca", par.resposta);
@@ -365,6 +443,7 @@
         if (escolhida) { escolhida.classList.remove("escolhida"); }
         escolhida = (escolhida === b) ? null : b;
         if (escolhida) { escolhida.classList.add("escolhida"); }
+        mostrarDica();
       });
       caixaPecas.appendChild(b);
     });
@@ -395,6 +474,7 @@
           escolhida = null;
         }
         atualizarConferir();
+        mostrarDica();
       });
 
       caixaAlvos.appendChild(alvo);
@@ -435,8 +515,10 @@
           ? "Você ligou os quatro corretamente."
           : "As respostas corretas estão escritas em cada linha. Leia com calma antes de seguir.");
       botao("Ver meu resultado", terminar);
+      mostrarDica();
     });
     btnAcao.disabled = true;
+    mostrarDica();
   }
 
   /* ==================== tipo: opções ==================== */
