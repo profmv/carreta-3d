@@ -1,0 +1,272 @@
+/* Carreta 3D — estilo comum a todas as páginas.
+   Pensado para projeção em sala pequena e para celular: fonte grande,
+   alto contraste, alvos de toque generosos. */
+
+:root {
+  --azul: #14505e;
+  --azul-escuro: #0d3742;
+  --laranja: #ef7722;
+  --laranja-claro: #fff0e3;
+  --fundo: #f7f5f1;
+  --carta: #ffffff;
+  --texto: #16242b;
+  --texto-suave: #52646d;
+  --borda: #d9d3ca;
+  --verde: #1e7d52;
+  --verde-claro: #e6f4ec;
+  --vermelho: #b3261e;
+  --vermelho-claro: #fbeae9;
+  --raio: 14px;
+  --sombra: 0 2px 10px rgba(13, 55, 66, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+body { padding-bottom: 40px; }
+
+.faixa {
+  background: var(--azul);
+  color: #fff;
+  padding: 18px 16px;
+}
+
+.faixa .container { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+.faixa h1 { font-size: 1.35rem; margin: 0; font-weight: 700; letter-spacing: .2px; }
+.faixa .sub { color: #cfe4ea; font-size: .95rem; margin: 0; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+
+h2 { font-size: 1.5rem; margin: 28px 0 10px; color: var(--azul-escuro); }
+h3 { font-size: 1.15rem; margin: 0 0 8px; }
+p { margin: 0 0 14px; }
+
+a { color: var(--azul); }
+
+/* ---------- botões ---------- */
+
+.botao {
+  display: inline-block;
+  background: var(--laranja);
+  color: #fff;
+  border: none;
+  border-radius: var(--raio);
+  padding: 16px 26px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  min-height: 56px;
+}
+.botao:hover { filter: brightness(1.06); }
+.botao:active { transform: translateY(1px); }
+.botao[disabled] { opacity: .45; cursor: not-allowed; }
+
+.botao.secundario { background: var(--azul); }
+.botao.neutro { background: #fff; color: var(--azul); border: 2px solid var(--azul); }
+.botao.perigo { background: #fff; color: var(--vermelho); border: 2px solid var(--vermelho); }
+.botao.pequeno { padding: 10px 16px; font-size: .95rem; min-height: 44px; }
+
+.linha-botoes { display: flex; gap: 12px; flex-wrap: wrap; margin: 18px 0; }
+
+/* ---------- cartões ---------- */
+
+.carta {
+  background: var(--carta);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 20px;
+  margin: 16px 0;
+}
+
+.cartas { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+.carta-aula { display: flex; flex-direction: column; }
+.carta-aula .etiqueta {
+  display: inline-block;
+  background: var(--laranja-claro);
+  color: #a04a06;
+  font-weight: 700;
+  font-size: .8rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+  align-self: flex-start;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+.carta-aula .etiqueta.breve { background: #eceae6; color: #6b6a66; }
+.carta-aula p { color: var(--texto-suave); flex: 1; }
+.carta-aula.inativa { opacity: .6; }
+
+/* ---------- atividades ---------- */
+
+.barra-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: var(--carta);
+  border-bottom: 1px solid var(--borda);
+  padding: 10px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+.barra-topo .quem { font-weight: 700; }
+.barra-topo .placar { color: var(--azul); font-weight: 700; }
+
+.progresso { height: 8px; background: #e4e0da; border-radius: 99px; overflow: hidden; margin: 6px 0 0; }
+.progresso > div { height: 100%; background: var(--laranja); width: 0; transition: width .25s; }
+
+.enunciado {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--azul-escuro);
+}
+.apoio { color: var(--texto-suave); margin-bottom: 16px; }
+
+.opcoes { display: grid; gap: 12px; }
+.opcao {
+  background: #fff;
+  border: 2px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 16px 18px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-height: 60px;
+  color: var(--texto);
+}
+.opcao:hover:not([disabled]) { border-color: var(--azul); }
+.opcao.certa { border-color: var(--verde); background: var(--verde-claro); }
+.opcao.errada { border-color: var(--vermelho); background: var(--vermelho-claro); }
+.opcao[disabled] { cursor: default; }
+
+.retorno { border-radius: var(--raio); padding: 14px 16px; margin: 16px 0; font-size: 1rem; }
+.retorno.ok { background: var(--verde-claro); border-left: 6px solid var(--verde); }
+.retorno.nao { background: var(--vermelho-claro); border-left: 6px solid var(--vermelho); }
+.retorno strong { display: block; margin-bottom: 4px; }
+
+/* peças de encaixar (tocar para pegar, tocar para soltar) */
+.pecas { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+.peca {
+  background: var(--laranja-claro);
+  border: 2px solid var(--laranja);
+  color: #8a3f04;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  min-height: 52px;
+}
+.peca.escolhida { background: var(--laranja); color: #fff; outline: 3px solid #f9c395; }
+.peca.usada { visibility: hidden; }
+
+.alvos { display: grid; gap: 12px; }
+.alvo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 2px dashed var(--borda);
+  border-radius: var(--raio);
+  padding: 14px 16px;
+  cursor: pointer;
+  min-height: 64px;
+  font-family: inherit;
+  font-size: 1rem;
+  text-align: left;
+  width: 100%;
+  color: var(--texto);
+}
+.alvo .rotulo { font-weight: 700; color: var(--azul-escuro); min-width: 40%; }
+.alvo .vaga { color: var(--texto-suave); font-style: italic; }
+.alvo .posta { font-weight: 700; color: #8a3f04; }
+.alvo.pronto { border-style: solid; border-color: var(--azul); background: #f2f8fa; }
+.alvo.certa { border-color: var(--verde); background: var(--verde-claro); border-style: solid; }
+.alvo.errada { border-color: var(--vermelho); background: var(--vermelho-claro); border-style: solid; }
+
+/* desenho da impressora */
+.figura { width: 100%; max-width: 460px; margin: 0 auto; display: block; }
+.ponto-clique { cursor: pointer; fill: transparent; stroke: transparent; stroke-width: 2; }
+.ponto-clique:hover { fill: rgba(239, 119, 34, .28); stroke: var(--laranja); }
+.ponto-clique.acertou { fill: rgba(30, 125, 82, .35); stroke: var(--verde); }
+.ponto-clique.errou { fill: rgba(179, 38, 30, .30); stroke: var(--vermelho); }
+
+/* campo de digitação */
+.campo {
+  font-size: 1.3rem;
+  padding: 14px 16px;
+  border: 2px solid var(--borda);
+  border-radius: var(--raio);
+  font-family: inherit;
+  width: 100%;
+  max-width: 320px;
+  color: var(--texto);
+  background: #fff;
+}
+.campo:focus { outline: none; border-color: var(--azul); }
+
+/* ---------- placar final ---------- */
+
+.medalha {
+  text-align: center;
+  background: var(--azul);
+  color: #fff;
+  border-radius: var(--raio);
+  padding: 26px 20px;
+}
+.medalha .numero { font-size: 3.4rem; font-weight: 800; line-height: 1; }
+.medalha .de { color: #cfe4ea; }
+.medalha .frase { margin-top: 10px; font-size: 1.1rem; }
+
+/* ---------- tabela do painel ---------- */
+
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .95rem; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--borda); }
+th { background: #eef3f5; color: var(--azul-escuro); }
+tbody tr:nth-child(even) { background: #fbfaf8; }
+
+.aviso {
+  background: var(--laranja-claro);
+  border-left: 6px solid var(--laranja);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 16px 0;
+}
+
+.rodape { color: var(--texto-suave); font-size: .85rem; margin-top: 36px; text-align: center; }
+
+.escondido { display: none !important; }
+
+@media (max-width: 520px) {
+  body { font-size: 17px; }
+  .faixa h1 { font-size: 1.15rem; }
+  .enunciado { font-size: 1.12rem; }
+  .alvo .rotulo { min-width: 100%; }
+  .alvo { flex-direction: column; align-items: flex-start; }
+}
+
+@media print {
+  .botao, .barra-topo { display: none; }
+  body { background: #fff; }
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel do professor — Carreta 3D</title>
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+
+<header class="faixa">
+  <div class="container">
+    <div>
+      <h1>Painel do professor</h1>
+      <p class="sub">Resultados guardados <strong>neste computador</strong></p>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="aviso">
+    Esta tela mostra só o que foi feito <strong>nesta máquina</strong>. Se a turma
+    usou vários computadores, baixe o CSV em cada um. Os arquivos podem ser
+    abertos e juntados depois, no Excel.
+  </div>
+
+  <div class="linha-botoes">
+    <button id="btn-csv" class="botao">Baixar CSV</button>
+    <button id="btn-atualizar" class="botao neutro">Atualizar</button>
+    <button id="btn-limpar" class="botao perigo">Apagar tudo</button>
+    <a class="botao neutro" href="index.html">Voltar ao portal</a>
+  </div>
+
+  <h2>Resumo por aluno</h2>
+  <div id="resumo"></div>
+
+  <h2>Tudo o que foi feito</h2>
+  <div id="detalhe"></div>
+
+  <p class="rodape">
+    Nenhum dado sai deste computador. Não há servidor, conta nem envio pela internet.
+  </p>
+
+</main>
+
+<script src="assets/nucleo.js"></script>
+<script>
+(function () {
+  "use strict";
+  var C = window.Carreta;
+
+  function vazio(texto) {
+    var p = C.criar("p", null, texto);
+    return p;
+  }
+
+  function desenhar() {
+    var dados = C.lerResultados();
+    var resumo = C.el("resumo");
+    var detalhe = C.el("detalhe");
+    resumo.innerHTML = "";
+    detalhe.innerHTML = "";
+
+    if (!dados.length) {
+      resumo.appendChild(vazio("Ainda não há resultado guardado neste computador."));
+      return;
+    }
+
+    /* ----- resumo por aluno ----- */
+    var porAluno = {};
+    dados.forEach(function (r) {
+      if (!porAluno[r.nome]) {
+        porAluno[r.nome] = { acertos: 0, total: 0, atividades: 0 };
+      }
+      var a = porAluno[r.nome];
+      a.acertos += r.acertos;
+      a.total += r.total;
+      a.atividades += 1;
+    });
+
+    var tr = tabela(resumo, ["Aluno", "Atividades feitas", "Acertos", "Aproveitamento"]);
+    Object.keys(porAluno).sort().forEach(function (nome) {
+      var a = porAluno[nome];
+      var pct = a.total ? Math.round((a.acertos / a.total) * 100) : 0;
+      linha(tr, [nome, a.atividades, a.acertos + " de " + a.total, pct + "%"]);
+    });
+
+    /* ----- detalhe ----- */
+    var td = tabela(detalhe, ["Aluno", "Atividade", "Resultado", "Quando"]);
+    dados.slice().reverse().forEach(function (r) {
+      linha(td, [r.nome, r.atividade, r.acertos + " de " + r.total, r.quando]);
+    });
+  }
+
+  function tabela(onde, cabecalho) {
+    var t = document.createElement("table");
+    var thead = document.createElement("thead");
+    var linhaC = document.createElement("tr");
+    cabecalho.forEach(function (c) {
+      linhaC.appendChild(C.criar("th", null, c));
+    });
+    thead.appendChild(linhaC);
+    t.appendChild(thead);
+    var tbody = document.createElement("tbody");
+    t.appendChild(tbody);
+    onde.appendChild(t);
+    return tbody;
+  }
+
+  function linha(tbody, celulas) {
+    var tr = document.createElement("tr");
+    celulas.forEach(function (c) {
+      tr.appendChild(C.criar("td", null, String(c)));
+    });
+    tbody.appendChild(tr);
+  }
+
+  C.el("btn-csv").addEventListener("click", function () {
+    if (!C.lerResultados().length) {
+      alert("Não há nada para exportar ainda.");
+      return;
+    }
+    C.baixarCSV("resultados-carreta3d.csv");
+  });
+
+  C.el("btn-atualizar").addEventListener("click", desenhar);
+
+  C.el("btn-limpar").addEventListener("click", function () {
+    if (!confirm("Apagar TODOS os resultados guardados neste computador? Isto não tem volta. Baixe o CSV antes.")) {
+      return;
+    }
+    C.limparTudo();
+    desenhar();
+  });
+
+  desenhar();
+  C.avisarSeSemArmazenamento(document.querySelector("main.container"));
+})();
+</script>
+</body>
+</html>
