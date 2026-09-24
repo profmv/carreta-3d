@@ -11,8 +11,8 @@
   "use strict";
 
   var CFG = {
-    dataApi: "",   /* ex.: https://ep-xxxx.apirest.c-2.us-east-2.aws.neon.tech/neondb/rest/v1 */
-    auth: ""       /* ex.: https://ep-xxxx.neonauth.c-2.us-east-2.aws.neon.tech/neondb/auth */
+    dataApi: "https://ep-empty-salad-b5yybckd.apirest.c-7.us-east-2.aws.neon.tech/neondb/rest/v1",
+    auth: "https://ep-empty-salad-b5yybckd.neonauth.c-7.us-east-2.aws.neon.tech/neondb/auth"
   };
 
   var TABELA = "resultados";
@@ -54,10 +54,11 @@
       .then(function (j) {
         var valor = j.token || j.access_token || j.jwt;
         if (!valor) { throw new Error("token sem valor"); }
-        var seg = j.expires_in || 600;
+        /* o Neon devolve expires_at em segundos (token de 1 hora) */
+        var expira = j.expires_at ? j.expires_at * 1000 : Date.now() + 600000;
         try {
           sessionStorage.setItem(CHAVE_TOKEN,
-            JSON.stringify({ valor: valor, expira: Date.now() + seg * 1000 }));
+            JSON.stringify({ valor: valor, expira: expira }));
         } catch (e) {}
         return valor;
       })
