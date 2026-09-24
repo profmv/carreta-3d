@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Painel do professor — Carreta 3D</title>
-<link rel="stylesheet" href="assets/estilo.css">
+<link rel="stylesheet" href="assets/estilo.css?v=2">
 </head>
 <body>
 
@@ -39,12 +39,13 @@
   <div id="detalhe"></div>
 
   <p class="rodape">
-    Nenhum dado sai deste computador. Não há servidor, conta nem envio pela internet.
+    Os resultados ficam neste computador e também são enviados, quando há
+    internet, para o banco de dados do professor (Neon).
   </p>
 
 </main>
 
-<script src="assets/nucleo.js"></script>
+<script src="assets/nucleo.js?v=3"></script>
 <script>
 (function () {
   "use strict";
@@ -87,9 +88,10 @@
     });
 
     /* ----- detalhe ----- */
-    var td = tabela(detalhe, ["Aluno", "Atividade", "Resultado", "Quando"]);
+    var td = tabela(detalhe, ["Aluno", "Encontro", "Atividade", "Resultado", "Quando", "O que escreveu"]);
     dados.slice().reverse().forEach(function (r) {
-      linha(td, [r.nome, r.atividade, r.acertos + " de " + r.total, r.quando]);
+      linha(td, [r.nome, r.aula, r.atividade, r.acertos + " de " + r.total, r.quando,
+                 r.detalhe || ""]);
     });
   }
 

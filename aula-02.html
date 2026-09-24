@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encontro 2 — Modelagem e Impressão 3D</title>
+<link rel="stylesheet" href="assets/estilo.css?v=2">
+</head>
+<body>
+
+<header class="faixa">
+  <div class="container">
+    <div>
+      <h1>Encontro 2 &middot; Como a impressora funciona</h1>
+      <p class="sub">Modelagem e Impressão 3D &middot; Turma 202600324</p>
+    </div>
+  </div>
+</header>
+
+<!-- ============ tela: nome ============ -->
+<main id="tela-nome" class="container">
+  <div id="retomar-caixa"></div>
+  <div class="carta">
+    <h2 style="margin-top:0">Como você se chama?</h2>
+    <p>Escreva seu primeiro nome e o sobrenome. Se for fazer em grupo no mesmo
+       aparelho, escreva o nome de todos.</p>
+    <input id="campo-nome" class="campo" type="text" maxlength="60"
+           autocomplete="off" placeholder="Seu nome">
+    <div class="linha-botoes">
+      <button id="btn-entrar" class="botao">Entrar</button>
+      <a class="botao neutro" href="index.html">Voltar</a>
+    </div>
+  </div>
+</main>
+
+<!-- ============ tela: menu ============ -->
+<main id="tela-menu" class="container escondido">
+  <h2 id="saudacao">Atividades de hoje</h2>
+  <p>Faça na ordem que o professor pedir. O quiz no fim vale como revisão de tudo.
+     As atividades do Encontro 1 continuam no portal para quem ainda não fez.</p>
+  <div id="lista-atividades" class="cartas"></div>
+  <div class="linha-botoes">
+    <button id="btn-salvar-menu" class="botao secundario">Salvar meu resultado em arquivo</button>
+    <a class="botao neutro" href="index.html">Sair</a>
+  </div>
+  <p class="rodape">Seus resultados ficam guardados neste aparelho.</p>
+</main>
+
+<!-- ============ tela: jogo ============ -->
+<div id="tela-jogo" class="escondido">
+  <div class="barra-topo">
+    <span class="quem" id="jogo-quem"></span>
+    <span class="placar" id="jogo-placar"></span>
+  </div>
+  <div class="container">
+    <div class="progresso"><div id="jogo-barra"></div></div>
+    <h2 id="jogo-titulo"></h2>
+    <p class="enunciado" id="jogo-enunciado"></p>
+    <p class="apoio" id="jogo-apoio"></p>
+    <div id="jogo-area"></div>
+    <div id="jogo-retorno" class="escondido"></div>
+    <div class="linha-botoes">
+      <button id="btn-acao" class="botao escondido"></button>
+      <button id="btn-salvar" class="botao secundario pequeno">Salvar meu resultado</button>
+      <button id="btn-desistir" class="botao neutro pequeno">Voltar às atividades</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ peça cortada ao meio (clonada pela atividade "Por dentro da peça") ============ -->
+<div id="figura-corte" class="escondido">
+  <svg class="figura" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"
+       role="img" aria-label="Peça impressa cortada ao meio, vista de frente">
+    <defs>
+      <pattern id="trama" width="16" height="16" patternUnits="userSpaceOnUse">
+        <rect width="16" height="16" fill="#fff6ee"/>
+        <path d="M0 0 L16 16 M16 0 L0 16" stroke="#ef7722" stroke-width="2"/>
+      </pattern>
+      <pattern id="colunas" width="8" height="8" patternUnits="userSpaceOnUse">
+        <rect width="8" height="8" fill="#f7f5f1"/>
+        <path d="M4 0 V8" stroke="#e7b48a" stroke-width="2"/>
+      </pattern>
+      <pattern id="deitadas" width="8" height="8" patternUnits="userSpaceOnUse">
+        <rect width="8" height="8" fill="#ef7722"/>
+        <path d="M0 7.5 H8" stroke="#fff" stroke-width="1"/>
+      </pattern>
+      <pattern id="em-pe" width="8" height="8" patternUnits="userSpaceOnUse">
+        <rect width="8" height="8" fill="#d86414"/>
+        <path d="M7.5 0 V8" stroke="#fff" stroke-width="1"/>
+      </pattern>
+    </defs>
+
+    <!-- mesa -->
+    <rect x="20" y="220" width="360" height="14" rx="3" fill="#2f4f58"/>
+
+    <!-- suporte debaixo da aba (com uma folguinha em cima) -->
+    <rect x="266" y="92" width="80" height="128" fill="url(#colunas)"/>
+
+    <!-- preenchimento -->
+    <rect x="84" y="84" width="152" height="112" fill="url(#trama)"/>
+    <!-- base e topo -->
+    <rect x="84" y="196" width="152" height="24" fill="url(#deitadas)"/>
+    <rect x="84" y="60" width="152" height="24" fill="url(#deitadas)"/>
+    <!-- aba que sai para a direita, no ar -->
+    <rect x="260" y="60" width="90" height="28" fill="url(#deitadas)"/>
+    <!-- paredes: três voltas de cada lado -->
+    <rect x="60" y="60" width="24" height="160" fill="url(#em-pe)"/>
+    <rect x="236" y="60" width="24" height="160" fill="url(#em-pe)"/>
+    <rect x="60" y="60" width="290" height="160" fill="none" stroke="#a04a06" stroke-width="0"/>
+
+    <!-- áreas clicáveis -->
+    <rect class="ponto-clique" data-parte="parede" x="56" y="56" width="32" height="168" rx="4"/>
+    <rect class="ponto-clique" data-parte="parede" x="232" y="56" width="32" height="168" rx="4"/>
+    <rect class="ponto-clique" data-parte="preenchimento" x="90" y="90" width="140" height="100" rx="4"/>
+    <rect class="ponto-clique" data-parte="topo" x="88" y="56" width="144" height="30" rx="4"/>
+    <rect class="ponto-clique" data-parte="base" x="88" y="194" width="144" height="30" rx="4"/>
+    <rect class="ponto-clique" data-parte="suporte" x="264" y="94" width="84" height="124" rx="4"/>
+  </svg>
+</div>
+
+<script src="assets/nucleo.js?v=3"></script>
+<script src="assets/nuvem.js?v=3"></script>
+<script src="dados/quiz-aula-02.js?v=3"></script>
+<script src="assets/aula-02.js?v=3"></script>
+</body>
+</html>

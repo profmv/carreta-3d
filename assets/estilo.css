@@ -291,3 +291,89 @@ tbody tr:nth-child(even) { background: #fbfaf8; }
   .botao, .barra-topo { display: none; }
   body { background: #fff; }
 }
+
+/* ===== Encontro 2 (aula-02) ===== */
+
+/* cartões de leitura, antes das perguntas */
+.cartao-leitura {
+  border-left: 6px solid var(--azul);
+}
+.cartao-leitura h3 { color: var(--azul-escuro); }
+.cartao-leitura p:last-child { margin-bottom: 0; }
+
+/* formulário (o aluno escreve / escolhe) */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 16px 0;
+}
+.campo-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.campo-rotulo {
+  display: block;
+  font-weight: 700;
+  color: var(--azul-escuro);
+  font-size: 1rem;
+}
+.campo-nota {
+  font-size: .85rem;
+  color: var(--texto-suave);
+  margin-top: -2px;
+}
+.campo-largo {
+  width: 100%;
+  max-width: none;
+}
+
+/* chips (botões-pílula de escolha única) */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  background: #fff;
+  border: 2px solid var(--borda);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--texto);
+  cursor: pointer;
+  min-height: 40px;
+}
+.chip:hover:not([disabled]) { border-color: var(--azul); }
+.chip.marcado { background: var(--azul); border-color: var(--azul); color: #fff; }
+.chip.certa { border-color: var(--verde); background: var(--verde-claro); color: var(--texto); }
+.chip.errada { border-color: var(--vermelho); background: var(--vermelho-claro); color: var(--texto); }
+
+/* figuras SVG dentro das perguntas */
+.figura-caixa { margin: 0 0 16px; text-align: center; }
+.figura-caixa svg { width: 100%; height: auto; }
+.figura-perfil { width: 100%; max-width: 260px; margin: 0 auto; display: block; }
+
+/* quadro preenchido linha a linha, com rolagem no celular */
+.rolar { overflow-x: auto; margin: 16px 0; -webkit-overflow-scrolling: touch; }
+table.quadro {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: .95rem;
+}
+table.quadro th, table.quadro td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--borda);
+  white-space: nowrap;
+}
+table.quadro th { background: #eef3f5; color: var(--azul-escuro); }
+table.quadro td.ok { background: var(--verde-claro); color: #155c3d; font-weight: 700; }
+table.quadro td.nao { background: var(--vermelho-claro); color: #7a1a14; font-weight: 700; }
+table.quadro td small {
+  display: block;
+  font-weight: 400;
+  white-space: normal;
+  color: var(--texto-suave);
+  margin-top: 2px;
+}

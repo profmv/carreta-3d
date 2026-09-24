@@ -1,8 +1,8 @@
 # App do curso — como usar
 
 Portal com as atividades do curso **Modelagem e Impressão 3D**, turma 202600324.
-Hoje só o Encontro 1 está liberado; os outros dois aparecem como "em breve" e
-serão preenchidos depois.
+Os Encontros 1 e 2 já estão liberados; o Encontro 3 aparece como "em breve" e
+será preenchido depois.
 
 Não precisa de internet, não precisa instalar nada, não precisa de conta.
 
@@ -39,10 +39,10 @@ jeito. Só preste atenção a um aviso vermelho — ver o item 4.
 Rodar direto do pendrive também funciona, mas é mais lento. Copiar para o disco
 leva cinco segundos e evita dor de cabeça.
 
-## 3. O que tem no Encontro 1
+## 3. O que tem no Encontro 1 e no Encontro 2
 
-Cinco atividades curtas mais o quiz final. Dá para fazer tudo em cerca de vinte
-minutos, ou escolher só algumas.
+**Encontro 1** — cinco atividades curtas mais o quiz final. Dá para fazer tudo
+em cerca de vinte minutos, ou escolher só algumas.
 
 | # | Atividade | O que treina |
 |---|---|---|
@@ -55,6 +55,26 @@ minutos, ou escolher só algumas.
 
 Tudo foi escrito a partir dos 18 slides do Encontro 1. Não há nada ali que você
 não vá falar em sala.
+
+**Encontro 2** — nove atividades curtas mais o quiz final, sobre como a
+impressora funciona por dentro.
+
+| # | Atividade | O que treina |
+|---|---|---|
+| b1 | Siga o filamento | Encaixar cada parte da K1C na ordem em que o fio passa |
+| b2 | Tipos de impressora | Ler três cartões (FDM, resina, SLS) e responder |
+| b3 | O quadro dos filamentos | Preencher o quadro de PLA, PETG, ABS e TPU |
+| b4 | Qual filamento para cada peça | Escolher o filamento certo para cada situação |
+| b5 | Troca de filamento na ordem | Encaixar os passos certos da troca |
+| b6 | Caça ao modelo | Atividade com campo de texto livre — o que o aluno escreve vai para a coluna "detalhe" do CSV |
+| b7 | Precisa de suporte? | Decidir se cada peça precisa de suporte ao imprimir |
+| b8 | Por dentro da peça | Clicar em parede, preenchimento, base, topo e suporte num corte da peça |
+| b9 | Quiz final | Questões sobre tudo o que foi dado no Encontro 2 |
+
+O CSV agora tem uma coluna final, **"detalhe"**, com o que o aluno escreveu na
+atividade Caça ao modelo. Ela aparece na tabela "Tudo o que foi feito" do
+`painel.html` e fica vazia nas linhas antigas do Encontro 1 — os dois CSVs
+continuam compatíveis e podem ser juntados na mesma planilha.
 
 Detalhes que valem saber:
 
@@ -147,17 +167,19 @@ O endereço esconde a página dos alunos, e é só para isso que ele serve. Ele
 o repositório no GitHub vê a pasta na lista de arquivos. Não coloque aí nada
 que não possa ser visto.
 
-## 6. Para montar os Encontros 2 e 3
+## 6. Para montar o Encontro 3
 
-A estrutura já está pronta para repetir:
+O Encontro 2 já está pronto (veja a seção 3). A estrutura continua pronta para
+repetir o mesmo caminho no Encontro 3:
 
-1. Copie `aula-01.html` para `aula-02.html` e troque os títulos.
-2. Copie `assets/aula-01.js` para `assets/aula-02.js` e troque o conteúdo do
-   bloco `ATIVIDADES` no topo do arquivo. Os quatro tipos de atividade
-   (`clique`, `encaixar`, `opcoes`, `numero`) já funcionam — é só preencher.
-3. Copie `dados/quiz-aula-01.js` para `dados/quiz-aula-02.js`, troque o nome da
-   variável para `QUIZ_AULA_02` e escreva as questões.
-4. No `index.html`, tire a marcação de "em breve" do cartão do Encontro 2.
+1. Copie `aula-02.html` para `aula-03.html` e troque os títulos.
+2. Copie `assets/aula-02.js` para `assets/aula-03.js` e troque o conteúdo do
+   bloco `ATIVIDADES` no topo do arquivo. Os tipos de atividade (`clique`,
+   `encaixar`, `opcoes`, `numero`, `leitura`, `quadro`, `campos`) já
+   funcionam — é só preencher.
+3. Copie `dados/quiz-aula-02.js` para `dados/quiz-aula-03.js`, troque o nome da
+   variável para `QUIZ_AULA_03` e escreva as questões.
+4. No `index.html`, tire a marcação de "em breve" do cartão do Encontro 3.
 
 Nada mais precisa mudar: estilo, pontuação, painel e exportação servem para
 todos os encontros.
@@ -168,12 +190,15 @@ todos os encontros.
 app-do-curso/
 ├── index.html            portal com os três encontros
 ├── aula-01.html          atividades e quiz do Encontro 1
+├── aula-02.html          atividades e quiz do Encontro 2
 ├── painel.html           painel do professor, com exportação em CSV
 ├── abrir-app.bat         atalho que abre tudo no navegador
 ├── assets/estilo.css     aparência
 ├── assets/nucleo.js      nome do aluno, pontuação, armazenamento, CSV
 ├── assets/aula-01.js     as seis atividades do Encontro 1
-└── dados/quiz-aula-01.js as 18 questões do quiz
+├── assets/aula-02.js     as nove atividades do Encontro 2
+├── dados/quiz-aula-01.js as 18 questões do quiz do Encontro 1
+└── dados/quiz-aula-02.js as questões do quiz do Encontro 2
 ```
 
 ## 8. Se der errado em sala

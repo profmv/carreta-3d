@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Modelagem e Impressão 3D — Curso na carreta</title>
-<link rel="stylesheet" href="assets/estilo.css">
+<link rel="stylesheet" href="assets/estilo.css?v=2">
 </head>
 <body>
 
@@ -28,18 +28,21 @@
   <div class="cartas">
 
     <div class="carta carta-aula">
-      <span class="etiqueta">Encontro 1 &middot; hoje</span>
+      <span class="etiqueta">Encontro 1 &middot; 23/09</span>
       <h3>Primeiros passos</h3>
       <p>Segurança, a história da impressão 3D, quanto custa imprimir e as partes
          da nossa máquina. Cinco atividades e um quiz de 18 questões.</p>
       <a class="botao" href="aula-01.html">Começar</a>
     </div>
 
-    <div class="carta carta-aula inativa">
-      <span class="etiqueta breve">Encontro 2</span>
-      <h3>Em breve</h3>
-      <p>As atividades deste encontro ficam disponíveis na próxima aula.</p>
-      <button class="botao" disabled>Ainda não liberado</button>
+    <div class="carta carta-aula">
+      <span class="etiqueta">Encontro 2 &middot; hoje</span>
+      <h3>Como a impressora funciona</h3>
+      <p>Siga o filamento, tipos de impressora (FDM x resina x SLS), quadro dos
+         filamentos, qual filamento para cada peça, troca de filamento, caça ao
+         modelo, suportes e o que tem por dentro da peça. Oito atividades e um
+         quiz de 14 questões.</p>
+      <a class="botao" href="aula-02.html">Começar</a>
     </div>
 
     <div class="carta carta-aula inativa">
@@ -52,9 +55,10 @@
   </div>
 
   <div class="aviso">
-    <strong>Seus resultados ficam neste computador.</strong>
-    Nada é enviado pela internet e não é preciso criar conta. No fim da aula o
-    professor recolhe os resultados de cada máquina.
+    <strong>Seus resultados vão para o professor.</strong>
+    Ao terminar cada atividade, o seu nome, os acertos e o que você escreveu
+    ficam neste computador e são enviados para o banco de dados do professor.
+    Não é preciso criar conta. Só o professor vê os resultados.
   </div>
 
   <p class="rodape">
@@ -65,7 +69,8 @@
 
 </main>
 
-<script src="assets/nucleo.js"></script>
+<script src="assets/nucleo.js?v=3"></script>
+<script src="assets/nuvem.js?v=3"></script>
 <script>
 (function () {
   "use strict";
@@ -73,7 +78,7 @@
   var s = C.lerSessao();
   if (!s) { return; }
 
-  var destino = { "Encontro 1": "aula-01.html" }[s.aula];
+  var destino = { "Encontro 1": "aula-01.html", "Encontro 2": "aula-02.html" }[s.aula];
   if (!destino) { return; }
 
   var quantas = Object.keys(s.feitas).length;

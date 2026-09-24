@@ -59,15 +59,20 @@
 
   function salvarResultado(reg) {
     var lista = ler();
-    lista.push({
+    var linha = {
       nome: reg.nome || "sem nome",
       aula: reg.aula || "",
       atividade: reg.atividade || "",
       acertos: reg.acertos || 0,
       total: reg.total || 0,
-      quando: reg.quando || agora()
-    });
-    return gravar(lista);
+      quando: reg.quando || agora(),
+      detalhe: reg.detalhe || ""
+    };
+    lista.push(linha);
+    var ok = gravar(lista);
+    /* nuvem.js é opcional: se não carregou ou está desligado, nada muda */
+    if (glob.CarretaNuvem) { glob.CarretaNuvem.enviar(linha); }
+    return ok;
   }
 
   function limparTudo() { try { localStorage.removeItem(CHAVE); } catch (e) {} }
@@ -137,12 +142,14 @@
 
   function paraCSV(lista) {
     if (!lista) { lista = ler(); }
-    var linhas = ["nome;aula;atividade;acertos;total;percentual;quando"];
+    /* "detalhe" fica no fim: guarda o que o aluno escreveu (caça ao modelo).
+       Os CSV antigos, sem essa coluna, continuam juntando na mesma planilha. */
+    var linhas = ["nome;aula;atividade;acertos;total;percentual;quando;detalhe"];
     lista.forEach(function (r) {
       var pct = r.total ? Math.round((r.acertos / r.total) * 100) : 0;
       linhas.push([
         texto(r.nome), texto(r.aula), texto(r.atividade),
-        r.acertos, r.total, pct + "%", texto(r.quando)
+        r.acertos, r.total, pct + "%", texto(r.quando), texto(r.detalhe)
       ].join(";"));
     });
     return linhas.join("\r\n");
@@ -208,7 +215,7 @@
     if (pct >= 90) { return "Você pegou o assunto. Pode ensinar alguém."; }
     if (pct >= 70) { return "Muito bom. Ficou pouca coisa para amarrar."; }
     if (pct >= 50) { return "Está no caminho. Vale revisar os pontos que escaparam."; }
-    return "Primeira aula é assim mesmo. O que errou hoje, a gente vê de novo amanhã.";
+    return "No começo é assim mesmo. O que errou hoje, a gente vê de novo na próxima aula.";
   }
 
   glob.Carreta = {
