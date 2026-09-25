@@ -36,7 +36,7 @@
     </div>
 
     <div class="carta carta-aula">
-      <span class="etiqueta">Encontro 2 &middot; hoje</span>
+      <span class="etiqueta">Encontro 2 &middot; 24/09</span>
       <h3>Como a impressora funciona</h3>
       <p>Siga o filamento, tipos de impressora (FDM x resina x SLS), quadro dos
          filamentos, qual filamento para cada peça, troca de filamento, caça ao
@@ -45,11 +45,13 @@
       <a class="botao" href="aula-02.html">Começar</a>
     </div>
 
-    <div class="carta carta-aula inativa">
-      <span class="etiqueta breve">Encontro 3</span>
-      <h3>Em breve</h3>
-      <p>As atividades deste encontro ficam disponíveis na próxima aula.</p>
-      <button class="botao" disabled>Ainda não liberado</button>
+    <div class="carta carta-aula">
+      <span class="etiqueta">Encontro 3 &middot; hoje</span>
+      <h3>Tinkercad: modelar do zero</h3>
+      <p>A tela do Tinkercad, Sólido/Orifício/Agrupar, comandos e atalhos, contas de
+         medida e posição, de que formas é feito cada objeto e desafios de
+         construção em três níveis. Seis atividades, tudo dentro do Tinkercad.</p>
+      <a class="botao" href="aula-03.html">Começar</a>
     </div>
 
   </div>
@@ -78,7 +80,7 @@
   var s = C.lerSessao();
   if (!s) { return; }
 
-  var destino = { "Encontro 1": "aula-01.html", "Encontro 2": "aula-02.html" }[s.aula];
+  var destino = { "Encontro 1": "aula-01.html", "Encontro 2": "aula-02.html", "Encontro 3": "aula-03.html" }[s.aula];
   if (!destino) { return; }
 
   var quantas = Object.keys(s.feitas).length;
