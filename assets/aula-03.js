@@ -19,7 +19,7 @@
     {
       id: "d1",
       titulo: "A tela do Tinkercad",
-      resumo: "Clique na parte certa do esquema da tela do Tinkercad.",
+      resumo: "Clique na parte certa da tela real do Tinkercad.",
       tipo: "clique",
       figura: "figura-tinkercad",
       partes: [
@@ -28,22 +28,22 @@
           dica: "É a grade azul onde as formas são colocadas. Tudo ali é medido em milímetros." },
         { chave: "viewcube", chamada: "no cubo de vistas",
           nome: "O cubo de vistas",
-          dica: "Fica no canto do plano. Clicar nele muda de onde você está olhando a peça, sem mexer na peça." },
+          dica: "É o cubinho no canto de cima, à esquerda (Superior, Frontal...). Clicar nele muda de onde você está olhando a peça, sem mexer na peça." },
         { chave: "formas", chamada: "no painel de formas básicas",
           nome: "O painel de formas básicas",
-          dica: "Fica do lado direito: Caixa, Cilindro, Texto e outras formas prontas para arrastar até o plano." },
-        { chave: "solido-orificio", chamada: "nos botões Sólido / Orifício",
-          nome: "Sólido / Orifício",
-          dica: "Aparece quando uma forma está selecionada. Escolhe se ela vira material (Sólido) ou vira buraco (Orifício)." },
+          dica: "Fica do lado direito: Caixa, Cilindro, Esfera, Texto e outras formas prontas para arrastar até o plano." },
+        { chave: "grade", chamada: "no ajuste do passo da grade",
+          nome: "Ajustar Grade",
+          dica: "Fica embaixo, à direita. Diz de quanto em quanto a forma anda quando você arrasta (1,0 mm aqui)." },
         { chave: "agrupar", chamada: "no botão Agrupar",
           nome: "Agrupar",
-          dica: "Junta as formas selecionadas numa peça só. É aqui que um Orifício vira furo de verdade." },
+          dica: "É o ícone das duas formas juntas, na barra de cima (atalho Ctrl+G). Junta as formas selecionadas numa peça só. É aqui que um Orifício vira furo de verdade." },
         { chave: "alinhar", chamada: "no botão Alinhar",
           nome: "Alinhar",
-          dica: "Mostra bolinhas para centralizar ou encostar as formas selecionadas." },
+          dica: "É o ícone das barrinhas encostadas numa linha, na barra de cima (atalho L). Mostra bolinhas para centralizar ou encostar as formas selecionadas." },
         { chave: "regua", chamada: "no botão Régua",
           nome: "A Régua",
-          dica: "Mede distâncias no plano de trabalho." },
+          dica: "É o ícone em forma de L, no alto do painel da direita. Mede distâncias no plano de trabalho." },
         { chave: "exportar", chamada: "no botão Exportar",
           nome: "Exportar",
           dica: "É por aqui que a peça pronta sai do Tinkercad, para o próximo passo." }
@@ -552,7 +552,7 @@
           var alvo = svg.querySelector('[data-parte="' + p.chave + '"]');
           if (alvo) { alvo.classList.add("acertou"); }
           mostrarRetorno(false, "Ainda não. ",
-            "Veja em verde no desenho: " + p.nome.charAt(0).toLowerCase()
+            "Veja em verde na imagem: " + p.nome.charAt(0).toLowerCase()
             + p.nome.slice(1) + ". " + p.dica);
         }
         registrar(certo);

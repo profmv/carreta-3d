@@ -68,66 +68,34 @@
   </div>
 </div>
 
-<!-- ============ tela do Tinkercad, esquema simplificado (clonada pela atividade "A tela do Tinkercad") ============ -->
+<!-- ============ tela real do Tinkercad (captura do professor, 1915x871; clonada pela atividade "A tela do Tinkercad") ============ -->
+<style>
+  .figura.figura-real { max-width: 100%; border: 1px solid #c9d1d9; border-radius: 4px; }
+  @media (max-width: 720px) {
+    #jogo-area:has(.figura-real) { overflow-x: auto; }
+    .figura.figura-real { width: 720px; max-width: none; }
+  }
+</style>
 <div id="figura-tinkercad" class="escondido">
-  <svg class="figura" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg"
-       role="img" aria-label="Tela do Tinkercad, esquema simplificado: barra de ferramentas no topo, plano de trabalho à esquerda com o cubo de vistas e a forma selecionada, painel de formas à direita">
+  <svg class="figura figura-real" viewBox="0 0 1915 871" xmlns="http://www.w3.org/2000/svg"
+       role="img" aria-label="Captura da tela do Tinkercad: barra de ferramentas no topo, plano de trabalho no centro, cubo de vistas à esquerda, painel de formas à direita">
 
-    <rect x="0" y="0" width="400" height="260" fill="#fff"/>
+    <image href="assets/img/tinkercad-tela.webp" x="0" y="0" width="1915" height="871"/>
 
-    <!-- barra de ferramentas do topo -->
-    <rect x="8" y="8" width="384" height="34" rx="4" fill="#f7f5f1" stroke="#c9d1d9" stroke-width="1.5"/>
-    <rect x="20" y="14" width="70" height="22" rx="3" fill="#fff7e0" stroke="#c28a00" stroke-width="1.5"/>
-    <text x="55" y="29" font-size="10" text-anchor="middle" fill="#a06a00">Exportar</text>
-    <rect x="180" y="14" width="60" height="22" rx="3" fill="#eaf2fb" stroke="#0b5cad" stroke-width="1.5"/>
-    <text x="210" y="29" font-size="10" text-anchor="middle" fill="#0b5cad">Agrupar</text>
-    <rect x="246" y="14" width="55" height="22" rx="3" fill="#eaf2fb" stroke="#0b5cad" stroke-width="1.5"/>
-    <text x="273" y="29" font-size="10" text-anchor="middle" fill="#0b5cad">Alinhar</text>
-    <rect x="307" y="14" width="50" height="22" rx="3" fill="#eaf2fb" stroke="#0b5cad" stroke-width="1.5"/>
-    <text x="332" y="29" font-size="10" text-anchor="middle" fill="#0b5cad">Régua</text>
-
-    <!-- plano de trabalho -->
-    <rect x="8" y="50" width="290" height="196" fill="#eaf2fb" stroke="#0b5cad" stroke-width="2"/>
-    <g stroke="#c7dcf3" stroke-width="1">
-      <line x1="8" y1="98" x2="298" y2="98"/>
-      <line x1="8" y1="146" x2="298" y2="146"/>
-      <line x1="8" y1="194" x2="298" y2="194"/>
-      <line x1="80" y1="50" x2="80" y2="246"/>
-      <line x1="152" y1="50" x2="152" y2="246"/>
-      <line x1="224" y1="50" x2="224" y2="246"/>
-    </g>
-
-    <!-- forma no plano -->
-    <rect x="200" y="190" width="60" height="40" fill="#ef7722" stroke="#a04a06" stroke-width="1.5"/>
-
-    <!-- cubo de vistas -->
-    <rect x="20" y="60" width="36" height="36" rx="4" fill="#fff" stroke="#0b5cad" stroke-width="1.5"/>
-    <text x="38" y="82" font-size="9" text-anchor="middle" fill="#0b5cad">vista</text>
-
-    <!-- forma selecionada: painel Sólido / Orifício -->
-    <rect x="100" y="150" width="90" height="30" rx="3" fill="#fff" stroke="#a04a06" stroke-width="1.5"/>
-    <text x="145" y="169" font-size="9.5" text-anchor="middle" fill="#a04a06">Sólido | Orifício</text>
-
-    <!-- painel de formas básicas -->
-    <rect x="306" y="50" width="86" height="196" fill="#f7f5f1" stroke="#a04a06" stroke-width="2"/>
-    <rect x="322" y="66" width="26" height="26" fill="#ef7722" stroke="#a04a06" stroke-width="1.5"/>
-    <circle cx="365" cy="79" r="13" fill="#ef7722" stroke="#a04a06" stroke-width="1.5"/>
-    <text x="349" y="118" font-size="10" text-anchor="middle" fill="#a04a06">Formas</text>
-
-    <!-- áreas clicáveis (a de baixo primeiro, para as de cima ficarem por cima) -->
-    <rect class="ponto-clique" data-parte="plano" x="8" y="50" width="290" height="196"/>
-    <rect class="ponto-clique" data-parte="viewcube" x="20" y="60" width="36" height="36" rx="4"/>
-    <rect class="ponto-clique" data-parte="solido-orificio" x="100" y="150" width="90" height="30" rx="3"/>
-    <rect class="ponto-clique" data-parte="formas" x="306" y="50" width="86" height="196"/>
-    <rect class="ponto-clique" data-parte="exportar" x="20" y="14" width="70" height="22" rx="3"/>
-    <rect class="ponto-clique" data-parte="agrupar" x="180" y="14" width="60" height="22" rx="3"/>
-    <rect class="ponto-clique" data-parte="alinhar" x="246" y="14" width="55" height="22" rx="3"/>
-    <rect class="ponto-clique" data-parte="regua" x="307" y="14" width="50" height="22" rx="3"/>
+    <!-- áreas clicáveis, em pixels da captura (a de baixo primeiro, para as de cima ficarem por cima) -->
+    <polygon class="ponto-clique" data-parte="plano" points="447,52 1355,60 1645,430 1645,871 0,871 0,770"/>
+    <rect class="ponto-clique" data-parte="grade" x="1455" y="834" width="180" height="28" rx="4"/>
+    <rect class="ponto-clique" data-parte="viewcube" x="26" y="68" width="74" height="86" rx="6"/>
+    <rect class="ponto-clique" data-parte="formas" x="1650" y="122" width="262" height="749"/>
+    <rect class="ponto-clique" data-parte="exportar" x="1740" y="8" width="80" height="30" rx="4"/>
+    <rect class="ponto-clique" data-parte="agrupar" x="1254" y="4" width="42" height="40" rx="4"/>
+    <rect class="ponto-clique" data-parte="alinhar" x="1352" y="4" width="42" height="40" rx="4"/>
+    <rect class="ponto-clique" data-parte="regua" x="1754" y="56" width="56" height="58" rx="4"/>
   </svg>
 </div>
 
 <script src="assets/nucleo.js?v=3"></script>
 <script src="assets/nuvem.js?v=4"></script>
-<script src="assets/aula-03.js?v=2"></script>
+<script src="assets/aula-03.js?v=3"></script>
 </body>
 </html>
